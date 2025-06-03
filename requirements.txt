@@ -2,3 +2,4 @@ requests==2.31.0
 pgeocode==0.5.0
 kivy==2.2.1
 zipcodes==1.0.0
+sqlite3>=2.6.0
