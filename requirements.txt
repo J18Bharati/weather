@@ -1,0 +1,10 @@
+# Core dependencies
+requests==2.31.0
+pgeocode==0.5.0
+geopy==2.4.0
+kivy==2.2.1
+
+# Development dependencies
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
