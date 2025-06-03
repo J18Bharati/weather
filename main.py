@@ -725,34 +725,53 @@ class TemperatureDisplay(BoxLayout):
         
         self.save_button = Button(
             text="Save Records",
-            size_hint_x=0.33,
+            size_hint_x=0.25,
             font_size="16sp",
         )
         self.save_button.bind(on_press=self.on_save_records)
         
         self.view_button = Button(
             text="View Records",
-            size_hint_x=0.33,
+            size_hint_x=0.25,
             font_size="16sp",
         )
         self.view_button.bind(on_press=self.on_view_records)
         
         self.export_button = Button(
             text="Export Records to XML",
-            size_hint_x=0.34,
+            size_hint_x=0.25,
             font_size="16sp",
         )
         self.export_button.bind(on_press=self.on_export_records)
+
+        self.info_button = Button(
+            text="Info",
+            size_hint_x=0.25,
+            font_size="16sp",
+        )
+        self.info_button.bind(on_press=self.show_info_popup)
         
         button_layout.add_widget(self.save_button)
         button_layout.add_widget(self.view_button)
         button_layout.add_widget(self.export_button)
+        button_layout.add_widget(self.info_button)
 
         # Add widgets: Input on top, then weather info, then future forecast list, then buttons
         self.add_widget(self.input_widget)
         self.add_widget(self.weather_info)
         self.add_widget(self.forecast_list)
         self.add_widget(button_layout)
+
+        # Static bottom label
+        nomen_label = Label(
+            text="Jatin Bharati",
+            size_hint_y=None,
+            height="30dp",  # Adjust height as needed
+            font_size="12sp", # Adjust font size as needed
+            halign="center",
+            valign="middle"
+        )
+        self.add_widget(nomen_label)
 
     def on_fetch_weather(self, zip_code):
         """
@@ -892,7 +911,6 @@ class TemperatureDisplay(BoxLayout):
             
             print(f"Exported {len(records)} records to weather_records.xml")
             return True
-            
         except Exception as e:
             print(f"Error exporting to XML: {e}")
             return False
@@ -972,6 +990,29 @@ class TemperatureDisplay(BoxLayout):
         # Clear pending save info
         self.pending_save_info = None
 
+    def show_info_popup(self, instance):
+        """Display an informational popup."""
+        info_text = (
+            "PM Accelerator\n\n"
+            "A platform to transparently showcase PM skills to ease the "
+            "application / hiring process for PMs and companies."
+        )
+        content_label = Label(
+            text=info_text, 
+            halign='center', 
+            valign='top', 
+            padding=(10, 10)
+        )
+        # Ensure text wraps in Label within Popup
+        content_label.bind(size=lambda *args: setattr(content_label, 'text_size', (content_label.width - 20, None))) # subtract padding
+        
+        popup = Popup(
+            title="Information",
+            content=content_label,
+            size_hint=(0.8, 0.6)
+        )
+        popup.open()
+
 
 def fetch_weather_data(zip_code: str):
     """
@@ -1008,7 +1049,7 @@ def fetch_weather_data(zip_code: str):
 
 class WeatherApp(App):
     def build(self):
-        Window.size = (720, 540)
+        Window.size = (750, 550)
         return TemperatureDisplay()
 
 
