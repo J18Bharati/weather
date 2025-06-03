@@ -50,10 +50,6 @@ class Weather:
             self.current_city = relative_location.get('city')
             self.current_state = relative_location.get('state')
 
-            print(f"Current location: {self.current_city}, {self.current_state}")
-            print(f"Forecast URL: {self.forecast_url}")
-            print(f"Hourly Forecast URL: {self.hourly_forecast_url}")
-
             self._update_forecast()
             self._update_hourly_forecast()
 
@@ -149,4 +145,4 @@ class Weather:
     def __str__(self):
         """Return a string representation of the current weather conditions"""
         period = self.forecast_data[0]
-        return f"{period['name']}: {period['detailedForecast']}"
+        return f"{period['name']} in {self.current_city}, {self.current_state}: {period['detailedForecast']}"
